@@ -30,7 +30,8 @@ namespace Consoltest
 
 
             var strarr = new string [] {"xxx","abc","123","42s","css" };
-            var result=strarr.Select((value, index) => new { value, index }).Where(x => x.value.Contains("42s")).FirstOrDefault(); //取index AND value
+            var result=strarr.Select((value, index) => new { value, index }).Where(x => x.value.Contains("42s")).FirstOrDefault();
+            //取index AND value
 
 
             Console.WriteLine(result);
@@ -46,14 +47,14 @@ namespace Consoltest
         }
     }
 
-
+   
     public class Test
     {
         public int Testmath(int a, int b)
         {
             int count = 0;
             int ans = a * b;
-            string str = Convert.ToString(ans, 2);
+            string str = Convert.ToString(ans, 2); //into binary 
             foreach (var i in str)
             {
                 switch (i)
