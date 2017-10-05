@@ -1,0 +1,158 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Consoltest
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            //toolman T = new toolman(); /*the tool for pre do something  before the thing you really want to do
+            //                             can used the injecttion way to
+            //                             build and get the value output   */
+            //toolguy tt = new toolguy();
+
+            //var results = tt.GetValue(T);
+
+            //foreach (var result in results)
+            //{
+            //    Console.WriteLine(result);
+            //}
+            //string url = "https://www.liontravel.com/"; //test url
+            //webroserguy wb = new webroserguy(); //class for copy 
+            //wb.Copy(url); //method to copy 
+
+
+            var strarr = new string [] {"xxx","abc","123","42s","css" };
+            var result=strarr.Select((value, index) => new { value, index }).Where(x => x.value.Contains("42s")).FirstOrDefault(); //取index AND value
+
+
+            Console.WriteLine(result);
+            Console.Read();
+
+            // int test1 = 3;
+            // int test2 = 7;
+            // var T = new Test();
+            //var anser= T.Testmath(test1, test2);
+
+            // Console.WriteLine(anser);
+            // Console.Read();
+        }
+    }
+
+
+    public class Test
+    {
+        public int Testmath(int a, int b)
+        {
+            int count = 0;
+            int ans = a * b;
+            string str = Convert.ToString(ans, 2);
+            foreach (var i in str)
+            {
+                switch (i)
+                {
+                    case '0':
+
+                        break;
+                    case '1':
+
+                        count++;
+                        break;
+                }
+            }
+            return count;
+        }
+    }
+
+
+
+
+
+    //class one do something before the real request ex. gettoken and return some value
+
+    public class toolman
+    {// presume one class do something and getvalue by some method
+
+        public int number { get; set; }  // try build some field to save the value 
+        public string text { get; set; }
+        /* the method can be anythng    image one scenery
+       if you new to gettoken or want to made some software
+       getway or check then you can put your method on here
+       then in your controller's constructor  and set value in some field
+         */
+        public toolman()  //constructor 
+        {
+            int _number = 100;
+            string _text = "通關測試";  // set the value here
+            this.number = _number;
+            this.text = _text;
+        }
+
+    }
+    //set value
+    public class toolguy
+    {
+        public dynamic GetValue(Object obj)
+        {
+            Type t = obj.GetType();
+            PropertyInfo[] props = t.GetProperties();
+            var Pnumofobj = props.Length;
+            List<Object> ol = new List<object>();
+            foreach (var prop in props)
+            //GetIndexParameters
+            // 摘要:
+            //     當在衍生類別中覆寫時，傳回屬性的所有索引參數的陣列。
+            //
+            // 傳回:
+            //     ParameterInfo 型別的陣列，包含索引的參數。如果此屬性未建立索引，則表示陣列有 0 (零) 個項目。
+            {
+                if (prop.GetIndexParameters().Length == 0) // ??
+                {
+                    ol.Add(prop.Name);
+                    ol.Add(prop.PropertyType.Name);
+                    ol.Add(prop.GetValue(obj));
+                }
+            }
+            return ol;
+        }
+    }
+
+
+    public class webroserguy
+    {
+        public void Copy(string URL)
+        {
+            using (HttpClient hp = new HttpClient())
+            {
+                var content = hp.GetStringAsync(URL).Result;
+                Console.WriteLine(content);
+            }
+        }
+
+    }
+
+
+
+    public class  CompareTest
+    {
+        public void Compare(string Str)
+        {            
+
+
+        }
+
+    }
+
+
+
+
+
+
+}
